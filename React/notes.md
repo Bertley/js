@@ -141,3 +141,27 @@ You set process.env.NODE_ENV to production. When it's in production mode it stri
 It's not guaranteed that props.children will be an array. React only makes props.children an array if there are more than one child elements, 
 
 ## Describe how events are handled in React 
+
+In order to solve cross browser compatibility issue, event handlers in react will be passed instances of SyntheticEvent, Which is React's cross browser wrapper around the browser's native event. These synthetic events have the same interface as native, except that they work identically across all browsers. 
+
+What's mildly interesting is that React doesn't actualy attach events to the child nodes themselves. React will listen to all events at the top level using a single event listener. This is good for performance and it also means that React doesn't need to worry about keeping track of event listeners when updating the DOM. 
+
+## What's the difference between createElement & cloneElement ? 
+
+createElement is what JSX gets compiled to and is what React uses to create react elemenys (object representation of some ui). cloneElement is used to clone an element and pass it new props. 
+
+## What's the second argument that can optionally be passed to setState and what is the purpose? 
+
+A callback function which will be invoked when setState has finished and the component is re-rendered. 
+
+Use can also pass a function to setState that receives the previous state and props and returns a new state, 
+
+When setting state based on the previous  state, this is recommended 
+
+```
+this.setState((prevState, props) => {
+    return {
+        streak: prevState.streak + props.count
+    }
+})
+```
